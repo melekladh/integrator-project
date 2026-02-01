@@ -87,13 +87,13 @@ docker-compose ps
 source .venv/bin/activate
 
 # Lancez l'API FastAPI
-uvicorn main:app --port 8001 --reload
+uvicorn main:app --port 8000 --reload
 ```
 
-L'API sera disponible sur : **http://127.0.0.1:8001**
+L'API sera disponible sur : **http://127.0.0.1:8000**
 
 **Documentation interactive (Swagger UI) :**
-- http://127.0.0.1:8001/docs
+- http://127.0.0.1:8000/docs
 
 ### Option 2 : Exécution avec Docker
 
@@ -108,7 +108,7 @@ docker-compose logs -f fastapi
 docker-compose down
 ```
 
-L'API sera disponible sur : **http://localhost:8001**
+L'API sera disponible sur : **http://localhost:8000**
 
 ## 📡 Endpoints API
 
@@ -135,14 +135,14 @@ Recherche les documents FAQ pertinents pour une requête.
 **Requête :**
 ```json
 {
-  "query": "Comment créer un compte?"
+  "query": " What payment methods do you accept?"
 }
 ```
 
 **Réponse :**
 ```json
 {
-  "query": "Comment créer un compte?",
+  "query": "What payment methods do you accept?",
   "top_documents": [...]
 }
 ```
@@ -156,14 +156,14 @@ Génère une réponse basée sur la recherche sémantique et le modèle LLM.
 **Requête :**
 ```json
 {
-  "query": "Comment créer un compte?"
+  "query": "What payment methods do you accept?"
 }
 ```
 
 **Réponse :**
 ```json
 {
-  "query": "Comment créer un compte?",
+  "query": "What payment methods do you accept?",
   "answer": "Pour créer un compte, veuillez...",
   "source_documents": [...]
 }
@@ -197,28 +197,8 @@ Voir [requirements.txt](requirements.txt) pour la liste complète.
 - pydantic==2.5.0
 - llama-cpp-python==0.2.36 (optionnel, pour la génération)
 
-## 🐛 Troubleshooting
 
-### Docker build est très lent
-La compilation de `llama-cpp-python` prend 10-20 minutes. C'est normal.
 
-### ModuleNotFoundError: No module named 'rag'
-Assurez-vous que les imports pointent vers `utils` et non `rag`.
-
-### Port 8001 déjà utilisé
-```bash
-# Utilisez un port différent
-uvicorn main:app --port 8002 --reload
-
-# Ou tuez le processus existant
-lsof -ti:8001 | xargs kill -9
-```
-
-### ChromaDB error
-Assurez-vous que `chroma_data` est writable :
-```bash
-chmod -R 755 chroma_data/
-```
 
 ## 📝 Initialisation des Données
 
